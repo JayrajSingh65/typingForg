@@ -1,0 +1,99 @@
+---
+import MetaTags from '../components/SEO/MetaTags.astro';
+import '../styles/globals.css';
+import { ViewTransitions } from 'astro:transitions';
+
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+}
+
+const { 
+  title = 'TypeForge | Master Your Typing', 
+  description = 'The ultimate gamified typing platform for developers and enthusiasts.',
+  image
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    
+    <MetaTags 
+      title={title} 
+      description={description} 
+      image={image} 
+    />
+    
+    <!-- Google Fonts: Inter + Noto Sans for non-Latin scripts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,700;1,800;1,900&family=Noto+Sans:wght@400;500;700&family=Noto+Sans+Tamil:wght@400;500;700&family=Noto+Sans+Telugu:wght@400;500;700&family=Noto+Sans+Gujarati:wght@400;500;700&family=Noto+Sans+Devanagari:wght@400;500;700&family=Noto+Sans+Arabic:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <ViewTransitions />
+  </head>
+  <body>
+    <div class="relative min-h-screen flex flex-col">
+
+      <nav class="sticky top-0 z-50 w-full" style="border-bottom: 1px solid var(--tf-border); background: color-mix(in srgb, var(--tf-bg) 90%, transparent); backdrop-filter: blur(12px);">
+        <div style="max-width: 900px; margin: 0 auto; padding: 0 1rem; display: flex; height: 3.5rem; align-items: center; justify-content: space-between;">
+          <a href="/" style="font-size: 1.25rem; font-weight: 900; font-style: italic; letter-spacing: -0.03em; color: var(--tf-text); text-decoration: none;">
+            TypeForge
+          </a>
+          <a href="/test" style="font-size: 0.875rem; font-weight: 600; color: var(--tf-muted); text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='var(--tf-text)'" onmouseout="this.style.color='var(--tf-muted)'">
+            Test
+          </a>
+        </div>
+      </nav>
+
+      <main style="flex: 1; max-width: 100%; padding: 0;">
+        <slot />
+      </main>
+
+      <footer style="border-top: 1px solid var(--tf-border); padding: 1.5rem 1rem; text-align: center; font-size: 0.75rem; color: var(--tf-muted);">
+        © 2026 TypeForge — Type in any language
+      </footer>
+    </div>
+  </body>
+</html>
+
+<style is:global>
+  *, *::before, *::after { box-sizing: border-box; }
+
+  :root {
+    --font-sans: 'Inter', system-ui, sans-serif;
+    --tf-bg: #0a0a0f;
+    --tf-surface: rgba(255,255,255,0.04);
+    --tf-border: rgba(255,255,255,0.06);
+    --tf-text: #e2e8f0;
+    --tf-muted: #475569;
+    --tf-primary: #818cf8;
+    --tf-correct: #34d399;
+    --tf-incorrect: #f87171;
+    --tf-accent: #818cf8;
+  }
+
+  html {
+    font-family: 'Inter', system-ui, sans-serif;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background: var(--tf-bg);
+    color: var(--tf-text);
+    min-height: 100vh;
+    transition: background 0.4s ease, color 0.3s ease;
+    margin: 0;
+  }
+
+  ::-webkit-scrollbar { width: 5px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: var(--tf-muted); border-radius: 4px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--tf-primary); }
+
+  ::selection { background: var(--tf-primary); color: #fff; }
+</style>

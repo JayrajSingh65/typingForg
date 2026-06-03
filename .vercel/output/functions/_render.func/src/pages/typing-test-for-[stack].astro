@@ -1,0 +1,51 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { AuthButton } from '../components/Auth/AuthButton';
+import { TypingEngine } from '../features/typing/TypingEngine';
+
+export function getStaticPaths() {
+  const stacks = [
+    { id: 'javascript', name: 'JavaScript', description: 'Master your JS syntax typing speed.' },
+    { id: 'python', name: 'Python', description: 'Practice indentation and Pythonic patterns.' },
+    { id: 'rust', name: 'Rust', description: 'Be fast with those angle brackets and lifetimes.' },
+    { id: 'docker', name: 'Docker', description: 'Type Dockerfiles and YAML faster.' },
+    { id: 'sql', name: 'SQL', description: 'Practice complex queries and JOINs.' }
+  ];
+  
+  return stacks.map(stack => ({
+    params: { stack: stack.id },
+    props: { stack }
+  }));
+}
+
+const { stack } = Astro.props;
+---
+
+<Layout 
+  title={`${stack.name} Typing Test | TypeForge`}
+  description={`Improve your ${stack.name} typing speed with real-world code snippets. ${stack.description}`}
+>
+  
+  <div class="py-12 space-y-12">
+    <div class="text-center space-y-4">
+       <h1 class="text-4xl font-black italic tracking-tighter uppercase">{stack.name} TYPING CHALLENGE</h1>
+       <p class="text-muted-foreground max-w-2xl mx-auto">{stack.description}</p>
+    </div>
+    
+    <TypingEngine client:load initialMode="developer" initialLanguage={stack.id} />
+    
+    <section class="max-w-4xl mx-auto space-y-8 pt-24 border-t border-white/5">
+       <h2 class="text-2xl font-bold">Frequently Asked Questions</h2>
+       <div class="grid gap-6">
+          <div class="glass p-6 rounded-2xl border border-white/5">
+             <h3 class="font-bold mb-2">How does the {stack.name} typing test work?</h3>
+             <p class="text-sm text-muted-foreground">We fetch real code snippets from actual open source projects. You'll practice typing variables, function declarations, and common syntax patterns specific to {stack.name}.</p>
+          </div>
+          <div class="glass p-6 rounded-2xl border border-white/5">
+             <h3 class="font-bold mb-2">Can this improve my coding speed?</h3>
+             <p class="text-sm text-muted-foreground">Yes! Reducing the friction between your thoughts and the keyboard is key to 10x engineering. Practice makes perfect.</p>
+          </div>
+       </div>
+    </section>
+  </div>
+</Layout>
